@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { Text, View } from "react-native";
 import * as Font from "expo-font";
-import { Icon, Overlay } from "react-native-elements";
-import { Ionicons } from "@expo/vector-icons";
+import { Button, Icon, Overlay } from "react-native-elements";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+
+import Result from "./screens/Result";
+import Metric from "./screens/Metric";
+import Imperial from "./screens/Imperial";
+
+const Stack = createStackNavigator();
+const TopTabs = createMaterialTopTabNavigator();
 
 export default function App() {
   const [fontsLoaded, setFontsLoaded] = useState(false);
-  const [overlayVisible, setOverlayVisible] = useState(false);
-
-  const toggleOverlay = () => {
-    setOverlayVisible((currentState) => !currentState);
-  };
 
   async function loadFonts() {
     await Font.loadAsync({
@@ -23,61 +27,88 @@ export default function App() {
     loadFonts();
   }, []);
 
+  const homeTabs = () => {
+    return (
+      <TopTabs.Navigator
+        tabBarOptions={{
+          activeTintColor: "white",
+          inactiveTintColor: "#757575",
+          style: { backgroundColor: "#212121" },
+          labelStyle: {
+            textAlign: "center",
+            fontFamily: "Tabssom",
+            fontSize: 20,
+          },
+          indicatorStyle: {
+            borderBottomColor: "#0277BD",
+            borderBottomWidth: 1,
+          },
+        }}
+      >
+        <TopTabs.Screen
+          name="Metric"
+          component={Metric}
+          options={{ title: "کیلوگرم و سانتی‌متر" }}
+        />
+        <TopTabs.Screen
+          name="Imperial"
+          component={Imperial}
+          options={{ title: "اینچ و پوند" }}
+        />
+      </TopTabs.Navigator>
+    );
+  };
+
   if (!fontsLoaded) {
     return <Text>LOADING</Text>;
   }
 
   return (
-    <View
-      style={{
-        flex: 1,
-      }}
-    >
-      <View
-        style={{
-          flex: 9,
-          justifyContent: "center",
-          alignItems: "center",
-          backgroundColor: "#37474F",
-        }}
-      >
-        <View
-          style={{
-            width: 300,
-            height: 350,
-            justifyContent: "center",
-            alignItems: "center",
-            backgroundColor: "#263238",
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Home"
+          children={homeTabs}
+          options={{
+            title: "محاسبه‌گر شاخص توده بدنی",
+            headerTintColor: "#ECEFF1",
+            headerTitleAlign: "center",
+            headerStyle: {
+              backgroundColor: "#212121",
+            },
+            headerTitleStyle: {
+              fontFamily: "Tabssom",
+              fontSize: 22,
+            },
+            headerRight: () => (
+              <Icon
+                name="info"
+                type="AntDesign"
+                color="white"
+                size={28}
+                onPress={() => alert("Design & Development: Alireza Bagheri")}
+              />
+            ),
+            headerRightContainerStyle: {
+              marginRight: 10,
+            },
           }}
-        >
-          <Text>BMI: 30</Text>
-          <Text>شما در بازه افراد چاق هستید</Text>
-        </View>
-      </View>
-      <View
-        style={{
-          flex: 1,
-          height: 70,
-          justifyContent: "center",
-          alignItems: "center",
-          flexDirection: "row",
-          backgroundColor: "#212121",
-        }}
-      >
-        <Icon
-          name="medkit-outline"
-          type="ionicon"
-          color="#FFF"
-          size={35}
-          onPress={() => toggleOverlay()}
         />
-      </View>
-      <Overlay
-        isVisible={overlayVisible}
-        onBackdropPress={() => toggleOverlay()}
-      >
-        <Text>Overlay</Text>
-      </Overlay>
-    </View>
+        <Stack.Screen
+          name="Result"
+          component={Result}
+          options={{
+            title: "نتیجه",
+            headerStyle: { backgroundColor: "#00090B" },
+            headerTintColor: "#ECEFF1",
+            headerTitleAlign: "center",
+            headerTitleStyle: {
+              fontFamily: "Ojan",
+              fontSize: 24,
+            },
+          }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }

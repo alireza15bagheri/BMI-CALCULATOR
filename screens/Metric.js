@@ -1,12 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Text, View, ScrollView } from "react-native";
 import { Button, Icon, Slider } from "react-native-elements";
 import { Ionicons } from "@expo/vector-icons";
+import * as Font from "expo-font";
 
-export default function Metric() {
+export default function Metric({navigation}) {
   const [heightSliderValue, setHeightSliderValue] = useState(172);
   const [weightSliderValue, setWeightSliderValue] = useState(80);
   const [isMan, setIsMan] = useState(true);
+  const [fontsLoaded, setFontsLoaded] = useState(false);
+
+  async function loadFonts() {
+    await Font.loadAsync({
+      Tabssom: require("../fonts/Tabssom.ttf"),
+    });
+    setFontsLoaded(true);
+  }
+
+  useEffect(() => {
+    loadFonts();
+  }, []);
+
+  if (!fontsLoaded) {
+    return <Text>LOADING</Text>;
+  }
 
   const heightIncrease = () => {
     if (heightSliderValue < 220) {
@@ -272,7 +289,7 @@ export default function Metric() {
               type="ionicon"
             />
           }
-          onPress={() => alert("Clicked")}
+          onPress={() => navigation.navigate("Result")}
         />
       </View>
     </View>
