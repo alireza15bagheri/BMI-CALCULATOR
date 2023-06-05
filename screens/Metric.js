@@ -4,7 +4,7 @@ import { Button, Icon, Slider } from "react-native-elements";
 import { Ionicons } from "@expo/vector-icons";
 import * as Font from "expo-font";
 
-export default function Metric({navigation}) {
+export default function Metric({ navigation }) {
   const [heightSliderValue, setHeightSliderValue] = useState(172);
   const [weightSliderValue, setWeightSliderValue] = useState(80);
   const [isMan, setIsMan] = useState(true);
@@ -47,6 +47,14 @@ export default function Metric({navigation}) {
     if (weightSliderValue > 40) {
       setWeightSliderValue((currentValue) => currentValue - 1);
     }
+  };
+
+  const calculateBMI = () => {
+    let height = (heightSliderValue / 100) * (heightSliderValue / 100);
+    let weight = weightSliderValue;
+    let BMI = Math.round(weight / height);
+    alert(BMI);
+    navigation.navigate("Result");
   };
 
   return (
@@ -289,7 +297,7 @@ export default function Metric({navigation}) {
               type="ionicon"
             />
           }
-          onPress={() => navigation.navigate("Result")}
+          onPress={() => calculateBMI()}
         />
       </View>
     </View>

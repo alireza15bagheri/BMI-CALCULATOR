@@ -49,6 +49,14 @@ export default function Imperial({ navigation }) {
     }
   };
 
+  const calculateBMI = () => {
+    let height = heightSliderValue * heightSliderValue;
+    let weight = weightSliderValue;
+    let BMI = Math.round((weight * 703) / height);
+    alert(BMI);
+    navigation.navigate("Result");
+  };
+
   return (
     <View style={{ flex: 1, backgroundColor: isMan ? "#1b5e20" : "#ff5cc1" }}>
       <View style={{ flex: 9, justifyContent: "center" }}>
@@ -288,7 +296,7 @@ export default function Imperial({ navigation }) {
               type="ionicon"
             />
           }
-          onPress={() => navigation.navigate("Result")}
+          onPress={() => calculateBMI()}
         />
       </View>
     </View>

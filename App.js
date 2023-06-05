@@ -103,7 +103,7 @@ export default function App() {
             headerTintColor: "#ECEFF1",
             headerTitleAlign: "center",
             headerTitleStyle: {
-              fontFamily: "Ojan",
+              fontFamily: "Tabssom",
               fontSize: 24,
             },
           }}
