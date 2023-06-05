@@ -3,6 +3,7 @@ import { Text, View, ScrollView } from "react-native";
 import { Button, Icon, Slider } from "react-native-elements";
 import { Ionicons } from "@expo/vector-icons";
 import { connect } from "react-redux";
+
 import * as Font from "expo-font";
 
 function Metric({ navigation, addBMI }) {

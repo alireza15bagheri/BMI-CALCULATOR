@@ -32,7 +32,7 @@ function Result({ BMI }) {
 
   const showResult = () => {
     const userBmi = BMI;
-    if (userBmi < 19) {
+    if (userBmi <= 19) {
       return (
         <View
           style={{
@@ -77,7 +77,7 @@ function Result({ BMI }) {
           </Text>
         </View>
       );
-    } else if (userBmi > 19 && userBmi < 25) {
+    } else if (userBmi >= 19 && userBmi < 25) {
       return (
         <View
           style={{
@@ -119,7 +119,7 @@ function Result({ BMI }) {
           </Text>
         </View>
       );
-    } else if (userBmi > 25 && userBmi < 30) {
+    } else if (userBmi >= 25 && userBmi < 30) {
       return (
         <View
           style={{
@@ -162,7 +162,7 @@ function Result({ BMI }) {
           </Text>
         </View>
       );
-    } else if (userBmi > 30 && userBmi < 35) {
+    } else if (userBmi >= 30 && userBmi < 35) {
       return (
         <View
           style={{
@@ -205,7 +205,7 @@ function Result({ BMI }) {
           </Text>
         </View>
       );
-    } else if (userBmi > 35) {
+    } else if (userBmi >= 35) {
       return (
         <View
           style={{
