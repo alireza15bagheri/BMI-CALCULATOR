@@ -54,7 +54,6 @@ function Metric({ navigation, addBMI }) {
     let height = (heightSliderValue / 100) * (heightSliderValue / 100);
     let weight = weightSliderValue;
     let BMI = Math.round(weight / height);
-    alert(BMI);
     addBMI(BMI);
     navigation.navigate("Result");
   };
@@ -166,7 +165,6 @@ function Metric({ navigation, addBMI }) {
                 }
                 onPress={() => heightIncrease()}
               />
-
               <Text
                 style={{
                   height: 75,
