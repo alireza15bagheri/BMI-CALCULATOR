@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Text, View, ScrollView } from "react-native";
 import { Button, Icon, Slider } from "react-native-elements";
 import { Ionicons } from "@expo/vector-icons";
+import { connect } from "react-redux";
 import * as Font from "expo-font";
 
-export default function Metric({ navigation }) {
+function Metric({ navigation, addBMI }) {
   const [heightSliderValue, setHeightSliderValue] = useState(172);
   const [weightSliderValue, setWeightSliderValue] = useState(80);
   const [isMan, setIsMan] = useState(true);
@@ -54,6 +55,7 @@ export default function Metric({ navigation }) {
     let weight = weightSliderValue;
     let BMI = Math.round(weight / height);
     alert(BMI);
+    addBMI(BMI);
     navigation.navigate("Result");
   };
 
@@ -303,3 +305,17 @@ export default function Metric({ navigation }) {
     </View>
   );
 }
+
+function mapStateToProps(state) {
+  return {
+    BMI: state.BMI,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    addBMI: (bmi) => dispatch({ type: "NEW_BMI", data: bmi }),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Metric);

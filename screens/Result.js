@@ -3,27 +3,27 @@ import { Text, View } from "react-native";
 import * as Font from "expo-font";
 import { Button, Icon, Overlay } from "react-native-elements";
 import { Ionicons } from "@expo/vector-icons";
+import { connect } from "react-redux";
 
-export default function Result() {
+function Result({ BMI }) {
   const [overlayVisible, setOverlayVisible] = useState(false);
   const [fontsLoaded, setFontsLoaded] = useState(false);
 
-  
   async function loadFonts() {
     await Font.loadAsync({
       Tabssom: require("../fonts/Tabssom.ttf"),
     });
     setFontsLoaded(true);
   }
-  
+
   useEffect(() => {
     loadFonts();
   }, []);
-  
+
   if (!fontsLoaded) {
     return <Text>LOADING</Text>;
   }
-  
+
   const toggleOverlay = () => {
     setOverlayVisible((currentState) => !currentState);
   };
@@ -50,7 +50,7 @@ export default function Result() {
             backgroundColor: "#263238",
           }}
         >
-          <Text>BMI: 30</Text>
+          <Text>BMI: {BMI}</Text>
           <Text>شما در بازه افراد چاق هستید</Text>
         </View>
       </View>
@@ -83,8 +83,7 @@ export default function Result() {
           backgroundColor: "#9bb1bb",
         }}
       >
-        <Text style={{fontFamily:"Tabssom", fontSize:24}}>
-          {" "}
+        <Text style={{ fontFamily: "Tabssom", fontSize: 24 }}>
           فراموش نکنید که در یک نتیجه یکسان، بانوان چربی بیشتری دارند؛ همچنین یک
           فرد مسن نیز چربی بیشتر نسبت به افراد جوان دارد. شاخص توده بدنی جزئیات
           کافی درمورد وضعیت سلامتی یک فرد ارائه نمی‌دهد.
@@ -99,3 +98,11 @@ export default function Result() {
     </View>
   );
 }
+
+function mapStateToProps(state) {
+  return {
+    BMI: state.BMI,
+  };
+}
+
+export default connect(mapStateToProps)(Result);
